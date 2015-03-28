@@ -1,0 +1,9 @@
+{
+    "name": "aeDraggable", "version": "0.0.1",
+
+    "dependencies": {
+        "angular": "latest"
+    },
+
+    "license": "LGPL"
+}

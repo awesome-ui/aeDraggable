@@ -1,0 +1,26 @@
+{
+    "name": "aeDraggable", "version": "0.0.1",
+
+    "repository": "awesome-ui/aeDraggable",
+
+    "scripts": {
+        "postinstall": "bower install",
+        "start": "gulp"
+    },
+
+    "devDependencies": {
+
+        "bower": "latest",
+
+        "gulp": "latest",
+        "gulp-ng-annotate": "latest",
+        "gulp-uglify": "latest",
+        "gulp-rename": "latest",
+        "gulp-less": "latest",
+        "gulp-autoprefixer": "latest",
+        "gulp-jade": "latest"
+
+    },
+
+    "license": "LGPL"
+}
