@@ -1,0 +1,43 @@
+doctype html
+html(ng-app="example")
+
+    head
+
+        script(src='components/angular/angular.min.js')
+
+        link(rel='stylesheet', href='styles/index.css')
+        script(src='scripts/index.min.js')
+
+        script.
+
+            angular.module('example', ['bDraggable'])
+
+                .controller('ExampleCtrl', function ($scope) {
+                    $scope.items= [
+                        { name: 'one' },
+                        { name: 'two' },
+                        { name: 'three' },
+                        { name: 'four' },
+                        { name: 'five' },
+                        { name: 'six' },
+                        { name: 'seven' },
+                    ]
+
+                    $scope.handleItemDrag= function (item, from) {
+                        return from
+                    }
+
+                    $scope.handleItemDrop= function (item, to, from) {
+                        $scope.items.splice(to, 0, $scope.items.splice(from, 1)[0])
+                    }
+
+                })
+
+            ;
+
+    body(ng-controller="ExampleCtrl")
+
+        h1 bDraggable
+
+        ul
+            li(ng-repeat="item in items", b-draggable="application/data-item", draggable-drag="handleItemDrag(item, $index)", draggable-drop="handleItemDrop(item, $index, $data)") {{item}}
