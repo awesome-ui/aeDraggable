@@ -29,7 +29,7 @@
                 })
 
                 $e.on('drop', function (evt) {
-                    if (~evt.dataTransfer.types.indexOf(type)) {
+                    if (contains(evt.dataTransfer.types, type)) {
                         $scope.$apply(function () {
                             $scope.$eval($a.draggableDrop, {
                                 $data: evt.dataTransfer.getData(type)
@@ -41,6 +41,15 @@
             }
 
         }
+    }
+
+
+
+    function contains(list, value) {
+        for (var i= 0; i < list.length; ++i) {
+            if (list[i] === value) return true
+        }
+        return false
     }
 
 
