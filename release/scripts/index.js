@@ -4,38 +4,58 @@
 
     angular.module('bDraggable', [])
 
+        .constant('bDraggableConfig', {
+            draggingClassname: '_dragging',
+            draggingEnterClassname: '_dragging-enter',
+        })
+
         .directive('bDraggable', bDraggableDirective)
 
     ;
 
 
 
-    function bDraggableDirective() {
+    function bDraggableDirective(bDraggableConfig) {
         return {
             restrict: 'A',
 
             link: function ($scope, $e, $a) {
+                $a.$set('draggable', true)
 
                 var type= $a.bDraggable
 
-                $a.$set('draggable', true)
-
                 $e.on('dragstart', function (evt) {
-                    var data= $scope.$eval($a.draggableDrag)
-                    setTransferData(evt.dataTransfer, type, data)
+                    $e.addClass(bDraggableConfig.draggingClassname)
+                    setTransferData(evt.dataTransfer, type, $scope.$eval($a.draggableDrag))
                 })
 
                 $e.on('dragenter', function (evt) {
+                    if (!isIe() && hasTransferData(evt.dataTransfer, type)) {
+                        $e.addClass(bDraggableConfig.draggingEnterClassname)
+                    }
                     evt.stopPropagation()
                     evt.preventDefault()
                 })
 
                 $e.on('dragover', function (evt) {
+                    if (!isIe() && hasTransferData(evt.dataTransfer, type)) {
+                        $e.addClass(bDraggableConfig.draggingEnterClassname)
+                    }
                     evt.stopPropagation()
                     evt.preventDefault()
                 })
 
+                $e.on('dragleave', function (evt) {
+                    $e.removeClass(bDraggableConfig.draggingEnterClassname)
+                })
+
+                $e.on('dragend', function (evt) {
+                    $e.removeClass(bDraggableConfig.draggingClassname)
+                })
+
                 $e.on('drop', function (evt) {
+                    $e.removeClass(bDraggableConfig.draggingClassname)
+                    $e.removeClass(bDraggableConfig.draggingEnterClassname)
                     if (hasTransferData(evt.dataTransfer, type)) {
                         $scope.$apply(function () {
                             $scope.$eval($a.draggableDrop, {
